@@ -2,6 +2,7 @@ package fr.kizafox.teeolympics.core
 
 import fr.kizafox.teeolympics.TeeOlympics
 import fr.kizafox.teeolympics.managers.commands.AdminCommand
+import fr.kizafox.teeolympics.managers.commands.MapCommand
 import fr.kizafox.teeolympics.managers.listeners.PlayerListeners
 import fr.kizafox.teeolympics.managers.listeners.ServerListeners
 import fr.kizafox.teeolympics.tools.storage.TConfig
@@ -70,6 +71,7 @@ class TeeOlympicsCore(private var plugin: JavaPlugin?) : Core() {
         println("===============================")
         try {
             AdminCommand(this).register()
+            MapCommand(this).register()
 
             TeeOlympics.tlogger.send("${TeeOlympics.PREFIX} §7> §cCommands successfully registered")
         } catch (e: Exception) {

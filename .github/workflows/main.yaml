@@ -17,7 +17,7 @@ jobs:
         run:
           sudo apt update && sudo apt install sshpass
 
-      - name: Deploy TeeOlympics Plugin
+      - name: deploy
         run:
           sshpass -e ssh -o stricthostkeychecking=no ${{ secrets.APP_USER }}@${{ secrets.APP_HOST }}
           "cd /home/MinecraftServers/main/plugins/ && sudo rm TeeOlympics-1.0-SNAPSHOT.jar && sudo wget https://github.com/KIZAFOX/TeeOlympics-Minecraft/raw/main/target/TeeOlympics-1.0-SNAPSHOT.jar"

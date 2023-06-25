@@ -17,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.9.0-RC</kotlin.version>
     </properties>
-    <url>https://teeolympics.fr/</url>
+    <url>http://149.100.158.39:1212/</url>
 
     <developers>
         <developer>

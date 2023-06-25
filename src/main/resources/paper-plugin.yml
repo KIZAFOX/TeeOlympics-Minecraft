@@ -1,8 +1,8 @@
-name: TeeOlympics
+name: '${project.artifactId}'
 version: '${project.version}'
-main: fr.kizafox.teeolympics.TeeOlympics
+main: '${project.groupId}.${project.artifactId}'
 api-version: '1.20'
 authors: [KIZAFOX]
 contributors: [Pipou, Nehr]
-description: Plugin officiel du serveur TeeOlympics
-website: https://teeolympics.fr/
+description: '${project.description}'
+website: '${project.url}'

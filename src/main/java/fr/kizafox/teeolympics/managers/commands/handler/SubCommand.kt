@@ -1,13 +1,13 @@
 package fr.kizafox.teeolympics.managers.commands.handler
 
 import net.kyori.adventure.text.Component
-import org.bukkit.Bukkit;
-import org.bukkit.command.*;
+import org.bukkit.Bukkit
+import org.bukkit.command.*
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Objects;
+import java.lang.reflect.Field
+import java.util.HashMap
+import java.util.HashSet
+import java.util.Objects
 
 abstract class SubCommand @JvmOverloads constructor(
     private var command: String,
@@ -32,13 +32,14 @@ abstract class SubCommand @JvmOverloads constructor(
     }
 
     abstract fun perform(sender: CommandSender?, cmd: Command?, label: String?, args: Array<String>?)
+
     override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<String>): Boolean {
         if (permission != null && !Objects.requireNonNull<Command>(
                 Objects.requireNonNull<CommandMap?>(
                     commandMap
                 ).getCommand(command)
             ).testPermissionSilent(sender)
-        ) sender.sendMessage(Component.text("§cYou don't have permission to use this command!")) else perform(
+        ) sender.sendMessage(Component.text("§cTu n'as pas la permission d'utiliser cette commande!")) else perform(
             sender,
             cmd,
             label,
@@ -48,7 +49,7 @@ abstract class SubCommand @JvmOverloads constructor(
     }
 
     fun sendUsage(sender: CommandSender) {
-        if (usage != null) sender.sendMessage(Component.text(usage!!)) else sender.sendMessage(Component.text("&cUsage not set."))
+        if (usage != null) sender.sendMessage(Component.text(usage!!)) else sender.sendMessage(Component.text("&cUsage non définie."))
     }
 
     private class ReflectCommand(command: String) : Command(command) {
@@ -91,10 +92,10 @@ abstract class SubCommand @JvmOverloads constructor(
 
         private fun unRegisterBukkitCommand(cmd: Command) {
             try {
-                val result = getPrivateField(Bukkit.getServer().getPluginManager(), "commandMap")
+                val result = getPrivateField(Bukkit.getServer().pluginManager, "commandMap")
                 val commandMap: SimpleCommandMap = result as SimpleCommandMap
                 val map = getPrivateField(commandMap, "knownCommands")
-                val knownCommands = map as HashMap<String, Command>
+                val knownCommands = map as HashMap<*, *>
                 knownCommands.remove(cmd.name)
                 for (alias in cmd.aliases) {
                     knownCommands.remove(alias)

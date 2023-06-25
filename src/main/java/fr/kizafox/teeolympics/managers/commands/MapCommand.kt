@@ -4,11 +4,11 @@ import fr.kizafox.teeolympics.core.TeeOlympicsCore
 import fr.kizafox.teeolympics.managers.commands.handler.SubCommand
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
+import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import java.awt.Desktop
-import java.net.URI
 
 class MapCommand(private var instance: TeeOlympicsCore) : SubCommand("map") {
 
@@ -22,7 +22,12 @@ class MapCommand(private var instance: TeeOlympicsCore) : SubCommand("map") {
             return
         }
 
-        Desktop.getDesktop().browse(URI("${this.instance.getPlugin()!!.pluginMeta.website}"))
-        sender.sendMessage(Component.text("§a§oUne page internet vers le site vient d'être chargé!"))
+        val component: TextComponent = Component.text()
+            .content("${this.instance.getPlugin()!!.pluginMeta.website}")
+            .color(TextColor.color(0x18E1AC))
+            .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "${this.instance.getPlugin()!!.pluginMeta.website}"))
+            .build()
+
+        sender.sendMessage(component)
     }
 }

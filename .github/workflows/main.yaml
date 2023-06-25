@@ -12,8 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          ssh-private-key: ${{ secrets.APP_PASS_ADMIN }}
 
       - name: APT UPDATE and INSTALL SSHPASS
         run:
@@ -22,4 +20,4 @@ jobs:
       - name: deploy
         run:
           sshpass -e ssh -o stricthostkeychecking=no -p ${{ secrets.APP_PORT }} ${{ secrets.APP_USER }}@${{ secrets.APP_HOST }}
-          "sudo su && cd /home/MinecraftServers/main/plugins/ && rm TeeOlympics-1.0-SNAPSHOT.jar && wget https://github.com/KIZAFOX/TeeOlympics-Minecraft/raw/main/target/TeeOlympics-1.0-SNAPSHOT.jar"
+          "cd /home/MinecraftServers/main/plugins/ && rm TeeOlympics-1.0-SNAPSHOT.jar && wget https://github.com/KIZAFOX/TeeOlympics-Minecraft/raw/main/target/TeeOlympics-1.0-SNAPSHOT.jar"

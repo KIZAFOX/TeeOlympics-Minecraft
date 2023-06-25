@@ -20,4 +20,4 @@ jobs:
       - name: deploy
         run:
           sshpass -e ssh -o stricthostkeychecking=no -p ${{ secrets.APP_PORT }} ${{ secrets.APP_USER }}@${{ secrets.APP_HOST }}
-          "cd /home/MinecraftServers/main/plugins/ && sudo rm TeeOlympics-1.0-SNAPSHOT.jar && sudo wget https://github.com/KIZAFOX/TeeOlympics-Minecraft/raw/main/target/TeeOlympics-1.0-SNAPSHOT.jar"
+          "cd /home/MinecraftServers/main/plugins/ && rm TeeOlympics-1.0-SNAPSHOT.jar && wget https://github.com/KIZAFOX/TeeOlympics-Minecraft/raw/main/target/TeeOlympics-1.0-SNAPSHOT.jar"

@@ -31,7 +31,7 @@ class PlayerListeners(private var instance: TeeOlympicsCore?) : Listener {
         player.sendMessage(text("§8§l»§r N'oublie pas la commande §5§l/map§r pour voir la map en direct!"))
         player.sendMessage(text(""))
 
-        TList.load(player)
+        TList.load(instance, player)
     }
 
     @EventHandler (priority = EventPriority.MONITOR)

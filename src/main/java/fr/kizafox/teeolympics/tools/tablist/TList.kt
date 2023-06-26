@@ -16,8 +16,8 @@ class TList {
             object : BukkitRunnable() {
                 override fun run() {
                     try {
-                        val header: Component = Component.text("§6§lTeeOlympics")
-                        val footer: Component = Component.text("§7Ping: §e${player!!.ping} §8- §7Heure: §a${LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))} §8- §7TPS: §e${TLag.getLag()}")
+                        val header: Component = Component.text("\n§6§lTeeOlympics\n\n")
+                        val footer: Component = Component.text("\n§7Ping: §e${player!!.ping} §8- §7Heure: §a${LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))} §8- §7TPS: §e${TLag.getTPS()}\n")
 
                         audience!!.sendPlayerListHeaderAndFooter(header, footer)
                     } catch (e: NoSuchFieldException) {

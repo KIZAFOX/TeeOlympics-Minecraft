@@ -65,6 +65,8 @@ class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") 
                 sender.sendMessage(Component.text("${TeeOlympics.PREFIX} §eNombre de slot mit à jour sur §6§l${instance.getPlugin()!!.config.getInt("slot")}§r§e!"))
             }
             "tps" -> {
+                sender.sendMessage(Component.text("${TeeOlympics.PREFIX} §e§oChargement de la requête... merci d'attendre 15 secondes!"))
+
                 val stringBuilder = StringBuilder("${TeeOlympics.PREFIX} §e§oChargement de la requête... merci d'attendre 15 secondes!")
                 val tpsList = ArrayList<Double>(3)
 
@@ -73,13 +75,14 @@ class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") 
                 object : BukkitRunnable() {
                     override fun run() {
                         try {
+                            println("Timer: $time")
 
                             when(time){
-                                14L -> tpsList.add(TLag.getLag())
-                                10L -> tpsList.add(TLag.getLag())
-                                1L -> tpsList.add(TLag.getLag())
+                                14L -> tpsList.add(TLag.getTPS())
+                                10L -> tpsList.add(TLag.getTPS())
+                                1L -> tpsList.add(TLag.getTPS())
                                 0L -> {
-                                    TLag.getLag().let{
+                                    TLag.getTPS().let{
                                         for(tps in tpsList){
                                             stringBuilder.append(tps)
                                             stringBuilder.append(", ")
@@ -99,7 +102,7 @@ class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") 
                             e.printStackTrace()
                         }
                     }
-                }.runTaskLaterAsynchronously(instance.getPlugin()!!, time * 20)
+                }.runTaskLaterAsynchronously(instance.getPlugin()!!, time)
             }
         }
     }

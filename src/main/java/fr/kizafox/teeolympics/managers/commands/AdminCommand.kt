@@ -102,7 +102,7 @@ class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") 
                             e.printStackTrace()
                         }
                     }
-                }.runTaskLaterAsynchronously(instance.getPlugin()!!, time)
+                }.runTaskTimer(instance.getPlugin()!!, 0, 20)
             }
         }
     }

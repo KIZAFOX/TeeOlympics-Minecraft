@@ -1,6 +1,7 @@
 package fr.kizafox.teeolympics.managers.listeners
 
 import fr.kizafox.teeolympics.core.TeeOlympicsCore
+import fr.kizafox.teeolympics.tools.tablist.TList
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
@@ -29,6 +30,8 @@ class PlayerListeners(private var instance: TeeOlympicsCore?) : Listener {
         player.sendMessage(text(""))
         player.sendMessage(text("§8§l»§r N'oublie pas la commande §5§l/map§r pour voir la map en direct!"))
         player.sendMessage(text(""))
+
+        TList.load(player)
     }
 
     @EventHandler (priority = EventPriority.MONITOR)

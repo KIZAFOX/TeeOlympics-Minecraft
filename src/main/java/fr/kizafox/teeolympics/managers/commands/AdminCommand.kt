@@ -9,6 +9,7 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
+import kotlin.math.roundToInt
 
 class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") {
 
@@ -67,34 +68,32 @@ class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") 
             "tps" -> {
                 sender.sendMessage(Component.text("${TeeOlympics.PREFIX} §e§oChargement de la requête... merci d'attendre 15 secondes!"))
 
-                val stringBuilder = StringBuilder("${TeeOlympics.PREFIX} §e§oChargement de la requête... merci d'attendre 15 secondes!")
-                val tpsList = ArrayList<Double>(3)
+                val stringBuilder = StringBuilder()
+                val tpsList = HashMap<Int, Double>(3)
 
                 var time: Long = 15
 
                 object : BukkitRunnable() {
                     override fun run() {
                         try {
-                            println("Timer: $time")
-
                             when(time){
-                                14L -> tpsList.add(TLag.getTPS())
-                                10L -> tpsList.add(TLag.getTPS())
-                                1L -> tpsList.add(TLag.getTPS())
+                                15L -> tpsList[1] = TLag.getTPS()
+                                10L -> tpsList[2] = TLag.getTPS()
+                                5L -> tpsList[3] = TLag.getTPS()
                                 0L -> {
                                     TLag.getTPS().let{
-                                        for(tps in tpsList){
-                                            stringBuilder.append(tps)
-                                            stringBuilder.append(", ")
+                                        for((k, v) in tpsList){
+                                            stringBuilder.append("§e$k §7- §6§l" + (v * 100).roundToInt() / 100.0)
+                                            stringBuilder.append("§8§l|§r ")
                                         }
                                     }
 
-                                    sender.sendMessage(Component.text("${TeeOlympics.PREFIX} §eRésultat des TPS §6§l${stringBuilder.substring(0, stringBuilder.length - 2)}§r§e!"))
+                                    sender.sendMessage(Component.text("${TeeOlympics.PREFIX} §eRésultat de la requête sur les TPS sur ces 15 dernières secondes :"))
+                                    sender.sendMessage(Component.text(stringBuilder.substring(0, stringBuilder.length - 2)))
                                     tpsList.clear()
                                     this.cancel()
                                 }
                             }
-
                             time--
                         } catch (e: NoSuchFieldException) {
                             e.printStackTrace()

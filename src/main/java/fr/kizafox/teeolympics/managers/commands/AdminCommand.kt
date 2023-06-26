@@ -84,11 +84,11 @@ class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") 
                                     TLag.getTPS().let{
                                         for((k, v) in tpsList){
                                             stringBuilder.append("§e$k §7- §6§l" + (v * 100).roundToInt() / 100.0)
-                                            stringBuilder.append("§8§l|§r ")
+                                            stringBuilder.append(" §8§l|§r ")
                                         }
                                     }
 
-                                    sender.sendMessage(Component.text("${TeeOlympics.PREFIX} §eRésultat de la requête sur les TPS sur ces 15 dernières secondes :"))
+                                    sender.sendMessage(Component.text("§eRésultat de la requête sur les TPS sur ces 15 dernières secondes :"))
                                     sender.sendMessage(Component.text(stringBuilder.substring(0, stringBuilder.length - 2)))
                                     tpsList.clear()
                                     this.cancel()

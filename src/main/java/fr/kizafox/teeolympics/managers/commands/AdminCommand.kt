@@ -3,10 +3,12 @@ package fr.kizafox.teeolympics.managers.commands
 import fr.kizafox.teeolympics.TeeOlympics
 import fr.kizafox.teeolympics.core.TeeOlympicsCore
 import fr.kizafox.teeolympics.managers.commands.handler.SubCommand
+import fr.kizafox.teeolympics.tools.tps.TLag
 import net.kyori.adventure.text.Component
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.scheduler.BukkitRunnable
 
 class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") {
 
@@ -36,6 +38,7 @@ class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") 
             sender.sendMessage(Component.text(" "))
             sender.sendMessage(Component.text("§8§l»§r §eMOTD: §7/admin motd <line1/line2> <motd>"))
             sender.sendMessage(Component.text("§8§l»§r §eSlot: §7/admin slot <count>"))
+            sender.sendMessage(Component.text("§8§l»§r §eTPS: §7/admin tps"))
             sender.sendMessage(Component.text(" "))
             sender.sendMessage(Component.text(fullLine))
             return
@@ -60,6 +63,43 @@ class AdminCommand(private var instance: TeeOlympicsCore) : SubCommand("admin") 
                 instance.getPlugin()!!.saveConfig()
 
                 sender.sendMessage(Component.text("${TeeOlympics.PREFIX} §eNombre de slot mit à jour sur §6§l${instance.getPlugin()!!.config.getInt("slot")}§r§e!"))
+            }
+            "tps" -> {
+                val stringBuilder = StringBuilder("${TeeOlympics.PREFIX} §e§oChargement de la requête... merci d'attendre 15 secondes!")
+                val tpsList = ArrayList<Double>(3)
+
+                var time: Long = 15
+
+                object : BukkitRunnable() {
+                    override fun run() {
+                        try {
+
+                            when(time){
+                                14L -> tpsList.add(TLag.getLag())
+                                10L -> tpsList.add(TLag.getLag())
+                                1L -> tpsList.add(TLag.getLag())
+                                0L -> {
+                                    TLag.getLag().let{
+                                        for(tps in tpsList){
+                                            stringBuilder.append(tps)
+                                            stringBuilder.append(", ")
+                                        }
+                                    }
+
+                                    sender.sendMessage(Component.text("${TeeOlympics.PREFIX} §eRésultat des TPS §6§l${stringBuilder.substring(0, stringBuilder.length - 2)}§r§e!"))
+                                    tpsList.clear()
+                                    this.cancel()
+                                }
+                            }
+
+                            time--
+                        } catch (e: NoSuchFieldException) {
+                            e.printStackTrace()
+                        } catch (e: IllegalAccessException) {
+                            e.printStackTrace()
+                        }
+                    }
+                }.runTaskLaterAsynchronously(instance.getPlugin()!!, time * 20)
             }
         }
     }

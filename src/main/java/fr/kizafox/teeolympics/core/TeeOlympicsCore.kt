@@ -6,6 +6,7 @@ import fr.kizafox.teeolympics.managers.commands.MapCommand
 import fr.kizafox.teeolympics.managers.listeners.PlayerListeners
 import fr.kizafox.teeolympics.managers.listeners.ServerListeners
 import fr.kizafox.teeolympics.tools.storage.TConfig
+import fr.kizafox.teeolympics.tools.tps.TLag
 import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.plugin.Plugin
@@ -29,6 +30,8 @@ class TeeOlympicsCore(private var plugin: JavaPlugin?) : Core() {
         println("================================================================")
         try {
             instance = this
+
+            Bukkit.getServer().scheduler.scheduleSyncRepeatingTask(this.plugin!!, TLag(), 100L, 1L)
 
             TConfig.loadDefaultConfig(plugin)
 
